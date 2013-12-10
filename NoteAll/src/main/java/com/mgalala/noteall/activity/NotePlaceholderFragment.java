@@ -42,6 +42,7 @@ public class NotePlaceholderFragment extends Fragment implements View.OnClickLis
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
         Uri uri = (Uri) bundle.get(Intent.EXTRA_STREAM);
+        Log.i(NotePlaceholderFragment.class.getName(), "URI: " + uri.toString());
         fileURI = getPathFromUri(uri);
         Log.i(NotePlaceholderFragment.class.getName(), "URI: " + uri.getPath());
 
