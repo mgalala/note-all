@@ -23,10 +23,10 @@ public class NoteCategoryService {
         return noteCategories;
     }
 
-    public List<String> getNoteCategoriesNames(Context context) {
+    public List<Integer> getNoteCategoriesNames(Context context) {
         noteCategoryDAO = new NoteCategoryDAO(context);
         noteCategoryDAO.open();
-        List<String> noteCategories = noteCategoryDAO.getAllNoteCategoriesNames();
+        List<Integer> noteCategories = noteCategoryDAO.getAllNoteCategoriesNames();
         noteCategoryDAO.close();
 
         return noteCategories;

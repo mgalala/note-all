@@ -16,4 +16,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
+    <string name="photo_category">Photos</string>
+    <string name="video_category">Videos</string>
+    <string name="document_category">Documents</string>
+    <string name="web_category">Web</string>
+
 </resources>

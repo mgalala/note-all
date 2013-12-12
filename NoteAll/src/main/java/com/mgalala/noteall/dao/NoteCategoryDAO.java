@@ -48,14 +48,14 @@ public class NoteCategoryDAO {
         return noteCategories;
     }
 
-    public List<String> getAllNoteCategoriesNames() {
-        List<String> noteCategories = new ArrayList<String>();
+    public List<Integer> getAllNoteCategoriesNames() {
+        List<Integer> noteCategories = new ArrayList<Integer>();
         Cursor cursor = database.query(NoteCategoryEntity.TABLE_NAME,
                 new String[]{NoteCategoryEntity.COLUMN_NAME}, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            noteCategories.add(cursor.getString(0));
+            noteCategories.add(cursor.getInt(0));
             cursor.moveToNext();
         }
         // make sure to close the cursor

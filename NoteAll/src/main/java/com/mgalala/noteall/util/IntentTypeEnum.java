@@ -9,7 +9,9 @@ public enum IntentTypeEnum {
 
     VIDEO("video/*"),
 
-    DOCUMENT("application/");
+    DOCUMENT("application/"),
+
+    WEB("text/plain");
 
     private final String type;
 

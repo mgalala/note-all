@@ -2,6 +2,8 @@ package com.mgalala.noteall.sqllite.entity;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mgalala.noteall.activity.R;
+
 /**
  * Created by galala on 11/20/13.
  */
@@ -29,9 +31,9 @@ public class NoteCategoryEntity {
 
     private static void insertTestCategories(SQLiteDatabase database) {
         String insertSQL = "insert into " + TABLE_NAME + "(" + COLUMN_NAME + ") VALUES ('%s')";
-        database.execSQL(String.format(insertSQL, "Photos"));
-        database.execSQL(String.format(insertSQL, "Videos"));
-        database.execSQL(String.format(insertSQL, "Documents"));
-        database.execSQL(String.format(insertSQL, "Internet"));
+        database.execSQL(String.format(insertSQL, String.valueOf(R.string.photo_category)));
+        database.execSQL(String.format(insertSQL, String.valueOf(R.string.video_category)));
+        database.execSQL(String.format(insertSQL, String.valueOf(R.string.document_category)));
+        database.execSQL(String.format(insertSQL, String.valueOf(R.string.web_category)));
     }
 }
