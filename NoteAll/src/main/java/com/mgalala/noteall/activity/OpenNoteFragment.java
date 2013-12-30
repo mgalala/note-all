@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.mgalala.noteall.model.MobileResource;
@@ -20,7 +20,7 @@ import com.mgalala.noteall.util.FilePathUtil;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NotePlaceholderFragment extends Fragment implements View.OnClickListener {
+public class OpenNoteFragment extends Fragment {
 
     private static final String FILE_URI = "FILE_URI";
     public static final String NOTE_KEY = "NOTE_KEY";
@@ -29,30 +29,29 @@ public class NotePlaceholderFragment extends Fragment implements View.OnClickLis
     private MobileResource mobileResource;
     private Note note;
 
-    public NotePlaceholderFragment() {
+    public OpenNoteFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_open_note, container, false);
-        registerListeners(rootView);
         noteService = new NoteService();
         Intent intent = getActivity().getIntent();
         String intentType = intent.getType();
 
         Bundle bundle = intent.getExtras();
         if (bundle == null || bundle.size() == 0) {
-            Log.e(NotePlaceholderFragment.class.getName(), "The intent contains no paramters.");
+            Log.e(OpenNoteFragment.class.getName(), "The intent contains no paramters.");
             return rootView;
         }
 
         mobileResource = uriResolverFactory.getResourceURI(intentType, bundle, getActivity());
         if (mobileResource == null || mobileResource.getUri() == null) {
-            Log.e(NotePlaceholderFragment.class.getName(), "Can not get uri from the intent resource bundle");
+            Log.e(OpenNoteFragment.class.getName(), "Can not get uri from the intent resource bundle");
             return rootView;
         }
-        Log.i(NotePlaceholderFragment.class.getName(), "URI Path: " + mobileResource.getUri());
+        Log.i(OpenNoteFragment.class.getName(), "URI Path: " + mobileResource.getUri());
         note = noteService.getNoteByKey(FilePathUtil.encodeFilePath(mobileResource.getUri()), getActivity().getApplicationContext());
         if (note != null) {
             EditText editText = (EditText) rootView.findViewById(R.id.note_area);
@@ -62,26 +61,18 @@ public class NotePlaceholderFragment extends Fragment implements View.OnClickLis
         return rootView;
     }
 
-    public void registerListeners(View rootView) {
-        Button saveButton = (Button) rootView.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(this);
-
-        Button cancelButton = (Button) rootView.findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
+    public void onMenuItemClick(MenuItem menuItem) {
 //        String file = loadPreferences(FILE_URI);
 //        String noteKey = loadPreferences(NOTE_KEY);
         EditText editText = (EditText) getActivity().findViewById(R.id.note_area);
         String notes = editText.getText().toString();
-        switch (view.getId()) {
+        switch (menuItem.getItemId()) {
             case R.id.saveButton:
                 saveNote(notes);
                 break;
             case R.id.cancelButton:
                 //TODO: cancel and exit.
+                this.getActivity().finish();
                 break;
         }
     }
@@ -99,5 +90,6 @@ public class NotePlaceholderFragment extends Fragment implements View.OnClickLis
             note.setNoteSummary(noteSummary);
             noteService.updateNote(note, getActivity().getApplicationContext());
         }
+        this.getActivity().finish();
     }
 }
