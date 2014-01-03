@@ -20,16 +20,16 @@ public class URIResolverFactory {
         MobileResource mobileResource = new MobileResource();
         if (intentType.equals(IntentTypeEnum.IMAGE.getType())) {
             uriResolver = new StorageURIResolver();
-            mobileResource.setType(activity.getString(R.string.photo_category));
+            mobileResource.setType(R.string.photo_category);
         } else if (intentType.equals(IntentTypeEnum.VIDEO.getType())) {
             uriResolver = new StorageURIResolver();
-            mobileResource.setType(activity.getString(R.string.video_category));
+            mobileResource.setType(R.string.video_category);
         } else if (intentType.startsWith(IntentTypeEnum.DOCUMENT.getType())) {
             uriResolver = new StorageURIResolver();
-            mobileResource.setType(activity.getString(R.string.document_category));
+            mobileResource.setType(R.string.document_category);
         } else if (intentType.equals(IntentTypeEnum.WEB.getType())) {
             uriResolver = new WebURIResolver();
-            mobileResource.setType(activity.getString(R.string.web_category));
+            mobileResource.setType(R.string.web_category);
         } else {
             return null;
         }

@@ -9,6 +9,9 @@ import com.mgalala.noteall.model.Note;
 import com.mgalala.noteall.sqllite.SQLiteHelper;
 import com.mgalala.noteall.sqllite.entity.NoteEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by galala on 11/20/13.
  */
@@ -53,6 +56,21 @@ public class NoteDAO {
         Note note = cursorToNote(cursor);
         cursor.close();
         return note;
+    }
+
+    public List<Note> getNotesByCategoryKey(Integer categoryKey) {
+        String query = "SELECT * FROM " + NoteEntity.TABLE_NAME +
+                " WHERE " + NoteEntity.COLUMN_CATEGORY_ID + " =?";
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(categoryKey)});
+        List<Note> notes = new ArrayList<Note>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Note note = cursorToNote(cursor);
+            notes.add(note);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return notes;
     }
 
     private Note cursorToNote(Cursor cursor) {

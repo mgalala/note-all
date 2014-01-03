@@ -52,7 +52,7 @@ public class OpenNoteFragment extends Fragment {
             return rootView;
         }
         Log.i(OpenNoteFragment.class.getName(), "URI Path: " + mobileResource.getUri());
-        note = noteService.getNoteByKey(FilePathUtil.encodeFilePath(mobileResource.getUri()), getActivity().getApplicationContext());
+        note = noteService.getNoteByKey(mobileResource.getUri(), getActivity().getApplicationContext());
         if (note != null) {
             EditText editText = (EditText) rootView.findViewById(R.id.note_area);
             editText.setText(note.getNoteSummary());
@@ -62,8 +62,6 @@ public class OpenNoteFragment extends Fragment {
     }
 
     public void onMenuItemClick(MenuItem menuItem) {
-//        String file = loadPreferences(FILE_URI);
-//        String noteKey = loadPreferences(NOTE_KEY);
         EditText editText = (EditText) getActivity().findViewById(R.id.note_area);
         String notes = editText.getText().toString();
         switch (menuItem.getItemId()) {
@@ -81,7 +79,7 @@ public class OpenNoteFragment extends Fragment {
         if (note == null) {
             //it is a new note.
             note = new Note();
-            note.setNoteCategoryId(1);
+            note.setNoteCategoryId(mobileResource.getType());
             note.setNoteSummary(noteSummary);
             note.setNoteKey(FilePathUtil.encodeFilePath(mobileResource.getUri()));
             noteService.createNote(note, getActivity().getApplicationContext());

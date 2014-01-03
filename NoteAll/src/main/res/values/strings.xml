@@ -21,4 +21,6 @@
     <string name="document_category">Documents</string>
     <string name="web_category">Web</string>
 
+    <string name="no_notes_available">No notes available</string>
+
 </resources>
