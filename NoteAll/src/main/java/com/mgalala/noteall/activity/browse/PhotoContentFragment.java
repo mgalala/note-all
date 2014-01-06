@@ -64,13 +64,13 @@ public class PhotoContentFragment extends Fragment implements View.OnClickListen
         for (Note note : notes) {
             myGallery.addView(insertPhoto(FilePathUtil.decodeFilePath(note.getNoteKey())));
         }
-//        myGallery.addView(insertPhoto(FilePathUtil.decodeFilePath(notes.get(0).getNoteKey())));
+//        myGallery.addView(insertVideo(FilePathUtil.decodeFilePath(notes.get(0).getNoteKey())));
 
 //        File targetDirector = new File(targetPath);
 //
 //        File[] files = targetDirector.listFiles();
 //        for (File file : files) {
-//            myGallery.addView(insertPhoto(file.getAbsolutePath()));
+//            myGallery.addView(insertVideo(file.getAbsolutePath()));
 //        }
 //        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //        textView.setText(getArguments().getString(MENU_TITLE));

@@ -41,9 +41,14 @@ public class BrowseNoteActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position, String mCurrentSelectedCategory) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (R.string.photo_category == CategoryUtil.getCategoryKeyFromCategoryName(this.getApplicationContext(), mCurrentSelectedCategory)) {
+        int category = CategoryUtil.getCategoryKeyFromCategoryName(this.getApplicationContext(), mCurrentSelectedCategory);
+        if (R.string.photo_category == category) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PhotoContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
+                    .commit();
+        } else if (R.string.video_category == category) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, VideoContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
                     .commit();
         } else {
             //TODO: place all other fragments for all other types of contents.
