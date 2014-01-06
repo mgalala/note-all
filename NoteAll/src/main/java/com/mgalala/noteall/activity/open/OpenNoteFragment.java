@@ -1,4 +1,4 @@
-package com.mgalala.noteall.activity;
+package com.mgalala.noteall.activity.open;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.mgalala.noteall.activity.R;
 import com.mgalala.noteall.model.MobileResource;
 import com.mgalala.noteall.model.Note;
 import com.mgalala.noteall.service.NoteService;
@@ -52,7 +53,7 @@ public class OpenNoteFragment extends Fragment {
             return rootView;
         }
         Log.i(OpenNoteFragment.class.getName(), "URI Path: " + mobileResource.getUri());
-        note = noteService.getNoteByKey(mobileResource.getUri(), getActivity().getApplicationContext());
+        note = noteService.getNoteByKey(FilePathUtil.encodeFilePath(mobileResource.getUri()), getActivity().getApplicationContext());
         if (note != null) {
             EditText editText = (EditText) rootView.findViewById(R.id.note_area);
             editText.setText(note.getNoteSummary());
@@ -69,7 +70,6 @@ public class OpenNoteFragment extends Fragment {
                 saveNote(notes);
                 break;
             case R.id.cancelButton:
-                //TODO: cancel and exit.
                 this.getActivity().finish();
                 break;
         }

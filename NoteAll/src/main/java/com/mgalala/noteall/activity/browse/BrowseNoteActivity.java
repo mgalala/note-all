@@ -1,10 +1,14 @@
-package com.mgalala.noteall.activity;
+package com.mgalala.noteall.activity.browse;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
+
+import com.mgalala.noteall.activity.R;
+import com.mgalala.noteall.util.CategoryUtil;
 
 public class BrowseNoteActivity extends ActionBarActivity
         implements BrowseNoteNavigationFragment.NavigationDrawerCallbacks {
@@ -37,9 +41,15 @@ public class BrowseNoteActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position, String mCurrentSelectedCategory) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, BrowseNoteContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
-                .commit();
+        if (R.string.photo_category == CategoryUtil.getCategoryKeyFromCategoryName(this.getApplicationContext(), mCurrentSelectedCategory)) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PhotoContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
+                    .commit();
+        } else {
+            //TODO: place all other fragments for all other types of contents.
+            Log.i(this.getClass().getName(), "Another fragment");
+        }
+
     }
 
     @Override
@@ -53,19 +63,5 @@ public class BrowseNoteActivity extends ActionBarActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    public void onSectionAttached(int number) {
-//        switch (number) {
-//            case 1:
-//                mTitle = getString(R.string.title_section1);
-//                break;
-//            case 2:
-//                mTitle = getString(R.string.title_section2);
-//                break;
-//            case 3:
-//                mTitle = getString(R.string.title_section3);
-//                break;
-//        }
-//    }
 
 }

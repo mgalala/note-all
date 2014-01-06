@@ -1,4 +1,4 @@
-package com.mgalala.noteall.activity;
+package com.mgalala.noteall.activity.browse;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.mgalala.noteall.activity.R;
 import com.mgalala.noteall.service.NoteCategoryService;
 
 import java.util.List;

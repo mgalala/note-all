@@ -1,4 +1,4 @@
-package com.mgalala.noteall.activity;
+package com.mgalala.noteall.activity.open;
 
 
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.mgalala.noteall.activity.R;
 
 public class OpenNoteActivity extends ActionBarActivity {
 
