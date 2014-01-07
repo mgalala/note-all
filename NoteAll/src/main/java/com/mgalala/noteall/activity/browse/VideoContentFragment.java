@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +17,14 @@ import com.mgalala.noteall.activity.R;
 import com.mgalala.noteall.model.Note;
 import com.mgalala.noteall.service.NoteService;
 import com.mgalala.noteall.util.FilePathUtil;
+import com.mgalala.noteall.util.IntentTypeEnum;
 
 import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VideoContentFragment extends Fragment implements View.OnClickListener {
+public class VideoContentFragment extends BrowseFragment {
     public static final String MENU_TITLE = "MENU_TITLE";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static NoteService noteService;
@@ -80,6 +79,7 @@ public class VideoContentFragment extends Fragment implements View.OnClickListen
         imageView.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageBitmap(imageThumbnail);
+        imageView.setTag(path);
         imageView.setOnClickListener(this);
 
         layout.addView(imageView);
@@ -91,8 +91,8 @@ public class VideoContentFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View view) {
-        Log.i(this.getClass().getName(), "-----------------------------An image has been clicked--------------------------");
+    public String getIntentType() {
+        return IntentTypeEnum.VIDEO.getType();
     }
 }
 

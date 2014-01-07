@@ -15,6 +15,7 @@ import com.mgalala.noteall.model.MobileResource;
 import com.mgalala.noteall.model.Note;
 import com.mgalala.noteall.service.NoteService;
 import com.mgalala.noteall.service.URIResolverFactory;
+import com.mgalala.noteall.util.Constants;
 import com.mgalala.noteall.util.FilePathUtil;
 
 
@@ -39,15 +40,23 @@ public class OpenNoteFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_open_note, container, false);
         noteService = new NoteService();
         Intent intent = getActivity().getIntent();
-        String intentType = intent.getType();
-
         Bundle bundle = intent.getExtras();
+
         if (bundle == null || bundle.size() == 0) {
             Log.e(OpenNoteFragment.class.getName(), "The intent contains no paramters.");
             return rootView;
         }
 
-        mobileResource = uriResolverFactory.getResourceURI(intentType, bundle, getActivity());
+        if (bundle.get(Constants.OPEN_NOTE_FROM_BROWSE) == null ||
+                Constants.OPEN_NOTE_FROM_SHARE.equals(bundle.getString(Constants.OPEN_NOTE_FROM_SHARE))) {
+            String intentType = intent.getType();
+            mobileResource = uriResolverFactory.getResourceURIByBundle(intentType, bundle, getActivity());
+        } else if (bundle.get(Constants.OPEN_NOTE_FROM_BROWSE) != null &&
+                Constants.OPEN_NOTE_FROM_BROWSE.equals(bundle.getString(Constants.OPEN_NOTE_FROM_BROWSE))) {
+            String noteKey = bundle.getString(Constants.NOTE_KEY);
+            mobileResource = uriResolverFactory.getResourceByKey(bundle.getString(Constants.INTENT_TYPE), bundle.getString(Constants.NOTE_KEY));
+        }
+
         if (mobileResource == null || mobileResource.getUri() == null) {
             Log.e(OpenNoteFragment.class.getName(), "Can not get uri from the intent resource bundle");
             return rootView;
@@ -58,7 +67,6 @@ public class OpenNoteFragment extends Fragment {
             EditText editText = (EditText) rootView.findViewById(R.id.note_area);
             editText.setText(note.getNoteSummary());
         }
-
         return rootView;
     }
 

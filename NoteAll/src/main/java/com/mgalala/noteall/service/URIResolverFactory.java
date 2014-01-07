@@ -16,7 +16,7 @@ import com.mgalala.noteall.util.IntentTypeEnum;
 public class URIResolverFactory {
     private URIResolver uriResolver;
 
-    public MobileResource getResourceURI(String intentType, Bundle bundle, Activity activity) {
+    public MobileResource getResourceURIByBundle(String intentType, Bundle bundle, Activity activity) {
         MobileResource mobileResource = new MobileResource();
         if (intentType.equals(IntentTypeEnum.IMAGE.getType())) {
             uriResolver = new StorageURIResolver();
@@ -34,6 +34,23 @@ public class URIResolverFactory {
             return null;
         }
         mobileResource.setUri(uriResolver.resolveURI(bundle, activity));
+        return mobileResource;
+    }
+
+    public MobileResource getResourceByKey(String intentType, String noteKey) {
+        MobileResource mobileResource = new MobileResource();
+        if (intentType.equals(IntentTypeEnum.IMAGE.getType())) {
+            mobileResource.setType(R.string.photo_category);
+        } else if (intentType.equals(IntentTypeEnum.VIDEO.getType())) {
+            mobileResource.setType(R.string.video_category);
+        } else if (intentType.startsWith(IntentTypeEnum.DOCUMENT.getType())) {
+            mobileResource.setType(R.string.document_category);
+        } else if (intentType.equals(IntentTypeEnum.WEB.getType())) {
+            mobileResource.setType(R.string.web_category);
+        } else {
+            return null;
+        }
+        mobileResource.setUri(noteKey);
         return mobileResource;
     }
 

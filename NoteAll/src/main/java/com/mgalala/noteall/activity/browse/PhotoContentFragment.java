@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +16,14 @@ import com.mgalala.noteall.activity.R;
 import com.mgalala.noteall.model.Note;
 import com.mgalala.noteall.service.NoteService;
 import com.mgalala.noteall.util.FilePathUtil;
+import com.mgalala.noteall.util.IntentTypeEnum;
 
 import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PhotoContentFragment extends Fragment implements View.OnClickListener {
+public class PhotoContentFragment extends BrowseFragment {
     public static final String MENU_TITLE = "MENU_TITLE";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static NoteService noteService;
@@ -58,22 +57,9 @@ public class PhotoContentFragment extends Fragment implements View.OnClickListen
         }
         LinearLayout myGallery = (LinearLayout) rootView.findViewById(R.id.categoryGallery);
 
-//        String ExternalStorageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-//        String targetPath = ExternalStorageDirectoryPath + "/DCIM/Camera/";
-//        Toast.makeText(getActivity().getApplicationContext(), FilePathUtil.decodeFilePath(notes.get(0).getNoteKey()), Toast.LENGTH_LONG).show();
         for (Note note : notes) {
             myGallery.addView(insertPhoto(FilePathUtil.decodeFilePath(note.getNoteKey())));
         }
-//        myGallery.addView(insertVideo(FilePathUtil.decodeFilePath(notes.get(0).getNoteKey())));
-
-//        File targetDirector = new File(targetPath);
-//
-//        File[] files = targetDirector.listFiles();
-//        for (File file : files) {
-//            myGallery.addView(insertVideo(file.getAbsolutePath()));
-//        }
-//        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//        textView.setText(getArguments().getString(MENU_TITLE));
         return rootView;
     }
 
@@ -93,6 +79,7 @@ public class PhotoContentFragment extends Fragment implements View.OnClickListen
         imageView.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageBitmap(imageThumbnail);
+        imageView.setTag(path);
         imageView.setOnClickListener(this);
 
         layout.addView(imageView);
@@ -137,8 +124,7 @@ public class PhotoContentFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View view) {
-        Log.i(this.getClass().getName(), "-----------------------------An image has been clicked--------------------------");
+    public String getIntentType() {
+        return IntentTypeEnum.IMAGE.getType();
     }
 }
-
