@@ -10,7 +10,7 @@ import com.mgalala.noteall.util.Constants;
 /**
  * Created by mgalala on 1/7/14.
  */
-public abstract class BrowseFragment extends Fragment implements View.OnClickListener {
+public abstract class AbstractBrowseFragment extends Fragment implements View.OnClickListener {
 
     public abstract String getIntentType();
 

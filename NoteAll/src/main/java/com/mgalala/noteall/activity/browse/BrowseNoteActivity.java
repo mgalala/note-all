@@ -27,7 +27,6 @@ public class BrowseNoteActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_notes);
-
         mNavigationDrawerFragment = (BrowseNoteNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
@@ -49,6 +48,10 @@ public class BrowseNoteActivity extends ActionBarActivity
         } else if (R.string.video_category == category) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, VideoContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
+                    .commit();
+        } else if (R.string.document_category == category) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, DocumentContentFragment.newInstance(position + 1, mCurrentSelectedCategory))
                     .commit();
         } else {
             //TODO: place all other fragments for all other types of contents.

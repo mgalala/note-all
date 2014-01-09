@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class VideoContentFragment extends BrowseFragment {
+public class VideoContentFragment extends AbstractBrowseFragment {
     public static final String MENU_TITLE = "MENU_TITLE";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static NoteService noteService;
@@ -51,15 +51,17 @@ public class VideoContentFragment extends BrowseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_videos_notes, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_video_notes, container, false);
         List<Note> notes = noteService.getNotesByCategoryKey(R.string.video_category, getActivity().getApplicationContext());
         if (notes == null || notes.size() == 0) {
             ((TextView) rootView.findViewById(R.id.noNotes)).setText(R.string.no_notes_available);
+        } else {
+            LinearLayout myGallery = (LinearLayout) rootView.findViewById(R.id.categoryVideo);
+            for (Note note : notes) {
+                myGallery.addView(insertVideo(FilePathUtil.decodeFilePath(note.getNoteKey())));
+            }
         }
-        LinearLayout myGallery = (LinearLayout) rootView.findViewById(R.id.categoryVideo);
-        for (Note note : notes) {
-            myGallery.addView(insertVideo(FilePathUtil.decodeFilePath(note.getNoteKey())));
-        }
+
         return rootView;
     }
 

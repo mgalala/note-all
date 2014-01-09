@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PhotoContentFragment extends BrowseFragment {
+public class PhotoContentFragment extends AbstractBrowseFragment {
     public static final String MENU_TITLE = "MENU_TITLE";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static NoteService noteService;
@@ -54,12 +54,13 @@ public class PhotoContentFragment extends BrowseFragment {
         List<Note> notes = noteService.getNotesByCategoryKey(R.string.photo_category, getActivity().getApplicationContext());
         if (notes == null || notes.size() == 0) {
             ((TextView) rootView.findViewById(R.id.noNotes)).setText(R.string.no_notes_available);
+        } else {
+            LinearLayout myGallery = (LinearLayout) rootView.findViewById(R.id.categoryGallery);
+            for (Note note : notes) {
+                myGallery.addView(insertPhoto(FilePathUtil.decodeFilePath(note.getNoteKey())));
+            }
         }
-        LinearLayout myGallery = (LinearLayout) rootView.findViewById(R.id.categoryGallery);
 
-        for (Note note : notes) {
-            myGallery.addView(insertPhoto(FilePathUtil.decodeFilePath(note.getNoteKey())));
-        }
         return rootView;
     }
 
