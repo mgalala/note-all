@@ -16,9 +16,13 @@ public abstract class AbstractBrowseFragment extends Fragment implements View.On
 
     @Override
     public void onClick(View view) {
+        openNote(view.getTag().toString());
+    }
+
+    public void openNote(String noteKey) {
         Intent openNoteIntent = new Intent(this.getActivity().getApplicationContext(), OpenNoteActivity.class);
         openNoteIntent.putExtra(Constants.OPEN_NOTE_FROM_BROWSE, Constants.OPEN_NOTE_FROM_BROWSE);
-        openNoteIntent.putExtra(Constants.NOTE_KEY, view.getTag().toString());
+        openNoteIntent.putExtra(Constants.NOTE_KEY, noteKey);
         openNoteIntent.putExtra(Constants.INTENT_TYPE, getIntentType());
         startActivity(openNoteIntent);
     }

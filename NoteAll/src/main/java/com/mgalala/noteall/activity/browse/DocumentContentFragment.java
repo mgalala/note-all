@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,6 +62,20 @@ public class DocumentContentFragment extends AbstractBrowseFragment {
             final StableArrayAdapter adapter = new StableArrayAdapter(this.getActivity().getApplicationContext(),
                     android.R.layout.simple_list_item_1, notesKies);
             listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+//                    final String item = (String) parent.getItemAtPosition(position);
+                    StableArrayAdapter adapter = (StableArrayAdapter) parent.getAdapter();
+                    String path = adapter.getPath(position);
+                    openNote(path);
+                }
+
+            });
+
         }
         return rootView;
     }

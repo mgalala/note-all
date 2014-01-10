@@ -10,14 +10,14 @@ import java.util.List;
 
 public class StableArrayAdapter extends ArrayAdapter<String> {
 
-    HashMap<String, Integer> mIdMap;
+    HashMap<Integer, String> mIdMap;
 
     public StableArrayAdapter(Context context, int textViewResourceId,
                               List<String> notes) {
         super(context, textViewResourceId, notes);
-        mIdMap = new HashMap<String, Integer>();
+        mIdMap = new HashMap<Integer, String>();
         for (int i = 0; i < notes.size(); ++i) {
-            mIdMap.put(FilePathUtil.decodeFilePath(notes.get(i)), i);
+            mIdMap.put(i, FilePathUtil.decodeFilePath(notes.get(i)));
         }
     }
 
@@ -35,6 +35,10 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
 
     private String getFileNameFromPath(String path) {
         return path.substring(path.lastIndexOf("/") + 1, path.length());
+    }
+
+    public String getPath(int position) {
+        return mIdMap.get(position);
     }
 
     @Override
